@@ -36,11 +36,46 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+
+;; avoid weird delay at close frame
+(setq x-select-enable-clipboard-manager nil)
+
+;;; keybindings
+;; emacs
+
+(global-set-key (kbd "M-p") #'package-install)
+(global-set-key (kbd "<f12>") #'+doom-dashboard/open)
+(global-set-key (kbd "<f8>") #'doom/find-file-in-private-config)
+(global-set-key (kbd "M-N") #'display-line-numbers-mode)
+
+
+(after! 'undo-tree
+  (global-undo-tree-mode +1)
+  (undo-tree-mode +1))
+
+(after! 'treemacs
+  (global-set-key (kbd "M-<f9>") #'treemacs-select-window)
+  (global-set-key (kbd "C-x O") #'treemacs-select-window))
+
+(use-package! yasnippet
+  :init
+  (bind-key "M-RET" #'yas-insert-snippet))
+
+(use-package! crux
+  :init
+  (bind-key "C-c d" #'crux-duplicate-current-line-or-region))
+
+(use-package! vterm
+  :bind (("C-x M" . vterm)
+          :map vterm-mode-map
+          ("M-o" . other-window)
+          ("M-p" . vterm-send-up)
+          ("M-n" . vterm-send-down)))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
