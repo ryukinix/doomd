@@ -53,6 +53,12 @@
 (global-set-key (kbd "<f8>") #'doom/find-file-in-private-config)
 (global-set-key (kbd "M-N") #'display-line-numbers-mode)
 
+(use-package! smartparens
+  :config (setq sp-base-key-bindings 'paredit)
+          (setq sp-autoskip-closing-pair 'always)
+          (setq sp-hybrid-kill-entire-symbol nil)
+          (sp-use-smartparens-bindings)
+          (smartparens-global-strict-mode))
 
 (after! treemacs
   (global-set-key (kbd "M-<f9>") #'treemacs-select-window)
