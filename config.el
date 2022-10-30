@@ -1,5 +1,4 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
@@ -43,7 +42,8 @@
 (setq org-directory "~/org/")
 
 ;; avoid weird delay at close frame
-(setq x-select-enable-clipboard-manager nil)
+(after!
+  (setq x-select-enable-clipboard-manager nil))
 
 ;;; keybindings
 ;; emacs
@@ -54,11 +54,7 @@
 (global-set-key (kbd "M-N") #'display-line-numbers-mode)
 
 
-(after! 'undo-tree
-  (global-undo-tree-mode +1)
-  (undo-tree-mode +1))
-
-(after! 'treemacs
+(after! treemacs
   (global-set-key (kbd "M-<f9>") #'treemacs-select-window)
   (global-set-key (kbd "C-x O") #'treemacs-select-window))
 
@@ -72,10 +68,13 @@
 
 (use-package! vterm
   :bind (("C-x M" . vterm)
-          :map vterm-mode-map
-          ("M-o" . other-window)
-          ("M-p" . vterm-send-up)
-          ("M-n" . vterm-send-down)))
+         :map vterm-copy-mode-map
+         ("C-c C-k" . vterm-copy-mode)
+         :map vterm-mode-map
+         ("C-c C-k" . vterm-copy-mode)
+         ("M-o" . other-window)
+         ("M-p" . vterm-send-up)
+         ("M-n" . vterm-send-down)))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
