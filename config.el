@@ -47,18 +47,24 @@
 
 ;;; keybindings
 ;; emacs
-
 (global-set-key (kbd "M-p") #'package-install)
 (global-set-key (kbd "<f12>") #'+doom-dashboard/open)
 (global-set-key (kbd "<f8>") #'doom/find-file-in-private-config)
 (global-set-key (kbd "M-N") #'display-line-numbers-mode)
 
-(use-package! smartparens
-  :config (setq sp-base-key-bindings 'paredit)
-          (setq sp-autoskip-closing-pair 'always)
-          (setq sp-hybrid-kill-entire-symbol nil)
-          (sp-use-smartparens-bindings)
-          (smartparens-global-strict-mode))
+;; make smartparens more sane for me, paredit keybindings
+(after! smartparens
+  (use-package! smartparens
+   :config (setq sp-base-key-bindings 'paredit)
+   (setq sp-autoskip-closing-pair 'always)
+   (setq sp-hybrid-kill-entire-symbol nil)
+   (sp-use-smartparens-bindings)
+   (smartparens-global-strict-mode)
+
+   :bind (:map smartparens-mode-map
+               ("M-<backspace>" . sp-backward-kill-word)
+               ("M-<up>" . sp-splice-sexp-killing-backward)
+               ("M-S-<up>" . drag-stuff-up))))
 
 (after! treemacs
   (global-set-key (kbd "M-<f9>") #'treemacs-select-window)
