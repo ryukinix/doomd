@@ -42,8 +42,7 @@
 (setq org-directory "~/org/")
 
 ;; avoid weird delay at close frame
-(after!
-  (setq x-select-enable-clipboard-manager nil))
+(setq x-select-enable-clipboard-manager nil)
 
 ;;; keybindings
 ;; emacs
@@ -51,6 +50,15 @@
 (global-set-key (kbd "<f12>") #'+doom-dashboard/open)
 (global-set-key (kbd "<f8>") #'doom/find-file-in-private-config)
 (global-set-key (kbd "M-N") #'display-line-numbers-mode)
+
+(defun my-tabbar-buffer-groups ()
+  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
+              ((eq major-mode 'dired-mode) "emacs")
+              (t "user"))))
+
+(use-package! centaur-tabs
+  :config (setq centaur-tabs-buffer-groups-function 'my-tabbar-buffer-groups))
+
 
 ;; make smartparens more sane for me, paredit keybindings
 (after! smartparens
